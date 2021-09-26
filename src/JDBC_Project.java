@@ -15,6 +15,7 @@ import java.util.*;
         - Add Privileges to Employee and Admin
         - Uses console to grant users a text-based User Interphase. Helpful for ease of adding sql statements
         - Uses Scanner class to look for user inputs, which provides a more efficient way of inputting data
+        - Use looping and other java features to help provide a good user experience
 
  */
 
@@ -47,7 +48,7 @@ import java.util.*;
 
 
 
-public class testing {
+public class JDBC_Project {
     public static void main (String[] args) throws SQLException {
         boolean employee_signed_in = false;
         boolean admin_signed_in = false;
@@ -407,6 +408,12 @@ public class testing {
         return true;
     }
 
+    //End of Admin Menu/Functionality
+
+
+
+    //Start of User Menu/Functionality
+
     private static boolean employee_menu(Statement stmt){ //employee menu is for employee. Describes their privilages
         System.out.println("Employee Privilages inlude:");
         System.out.println("1. Pull employee information");
@@ -466,4 +473,7 @@ public class testing {
         }
         return true; //returns true if employee decides to do anything other than quit
     }
+
+    //End of User Functionality/Menu
+
 }
