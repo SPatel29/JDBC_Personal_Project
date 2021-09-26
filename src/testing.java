@@ -258,14 +258,18 @@ public class testing {
                 // String add = "insert into employee (employee_ssn, name, salary_type, job_title, bonus, federal_tax, yearly_income, "
                 //                    + "payment_date, payment_amount, state_name, insurance_plan) values('" + ssn + "', '" + name + "','"
                 //                    + salaryType + "','" + jobTitle + "','" + bonus + "','" + federalTax + "','" + yearlyIncome + "','" + paymentDate + "','" + paymentAmount + "','" + state + "','" + insurance + "');";
+                System.out.println("State:");
                 String state_name = scan.nextLine();
+                System.out.println("State Tax :");
                 String state_tax = scan.nextLine();
-
                 add = "insert into state (name, state_tax) values('"+state_name+"', '"+Integer.parseInt(state_tax)+"');" ;
                 stmt.executeUpdate(add);
-                System.out.println("Line after state add execute");
+                System.out.println("Employee State added successfully");
+                System.out.println("\n\n\n");
 
+                System.out.println("Insurance Plan Name:");
                 String insurance_plan_name = scan.nextLine();
+                System.out.println("Premium Cost Name:");
                 String premium_cost = scan.nextLine();
                 add = "insert into insurance_plan (name, premium_cost) values('"+insurance_plan_name+"', '"+Integer.parseInt(premium_cost)+"');" ;
                 stmt.executeUpdate(add);
@@ -300,9 +304,6 @@ public class testing {
                 add = "insert into employee (employee_ssn, employee_id, name, salary_type, job_title, bonus, yearly_income,state_name, address, " +
                         "insurance_plan_name) values('"+Integer.parseInt(ssn)+"' , '"+Integer.parseInt(id)+"', '"+name+"','"+salary_type+"', '"+job_title+"', '"+Integer.parseInt(bonus)+"', '"+Integer.parseInt(yearly_income)+"', '"+state_name+"', '"+address+"', '"+insurance_plan_name+"');  ";
 
-                /*add = "insert into employee (employee_ssn, employee_id, name, salary_type, job_title, bonus, yearly_income,state_name, address, " +
-                        "insurance_plan_name) values(12 , 21 , 'Sunny','Salary', 'Intern', 2999, 10000, 'IL', '123 Main', 'HPO');  "; */
-
                 System.out.println("Line after employee");
                 stmt.executeUpdate(add);
                 System.out.println("Employee added");
@@ -313,8 +314,9 @@ public class testing {
         }
         else if (command.equals("3")){
             try{
-                String remove = "delete from employee where employee_id = '"+21+"';";
-                //String remove = " delete from employee where employee_id = '"id "';";
+                System.out.println("ID:");
+                String id = scan.nextLine();
+                String remove = "delete from employee where employee_id = '"+Integer.parseInt(id)+"';";
                 stmt.executeUpdate(remove);
                 System.out.println("Employee removed!");
             }catch (Exception ex){
@@ -345,7 +347,9 @@ public class testing {
         String command = scan.nextLine();
         if (command.equals("1")){
             try{
-                String findUser = "select employee_ssn, namefrom employee where employee_id = '"+21+"';";
+                System.out.println("ID:");
+                String id = scan.nextLine();
+                String findUser = "select employee_ssn, name from employee where employee_id = '"+Integer.parseInt(id)+"';";
                 stmt.executeUpdate(findUser);
             }catch (Exception ex){
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
@@ -353,7 +357,36 @@ public class testing {
         }
         else if (command.equals("2")){
             try{
-                String update = "update employee set name = 'Tom' where employee_id = 21;";
+                System.out.println("ID:");
+                String id = scan.nextLine();
+
+                System.out.println("What would you like to change?");
+                System.out.println("1. Name");
+                System.out.println("2. State Name");
+                System.out.println("3. Address");
+                String option = scan.nextLine();
+                String change = "";
+                String update = "";
+                if (option.equals("1")){
+                    System.out.println("New Name:");
+                    change = scan.nextLine();
+                    update = "update employee set name = '"+change+"' where employee_id = '"+Integer.parseInt(id)+"';";
+                }
+                else if (option.equals("2")){
+                    System.out.println("New State Name:");
+                    change = scan.nextLine();
+                    update = "update employee set state_name = '"+change+"' where employee_id = '"+Integer.parseInt(id)+"';";
+
+                }
+                else if (option.equals("3")){
+                    option = "address";
+                    System.out.println("New Address:");
+                    change = scan.nextLine();
+                    update = "update employee set address = '"+change+"' where employee_id = '"+Integer.parseInt(id)+"';";
+                }
+                else {
+                    System.out.println("Please Choose a valid option. Try Again");
+                }
                 stmt.executeUpdate(update);
             }catch (Exception ex){
             }
