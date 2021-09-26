@@ -254,12 +254,29 @@ public class testing {
         else if (command.equals("2")){ //adding an employee
             try {
                 String add;
-                /*
+
+                // String add = "insert into employee (employee_ssn, name, salary_type, job_title, bonus, federal_tax, yearly_income, "
+                //                    + "payment_date, payment_amount, state_name, insurance_plan) values('" + ssn + "', '" + name + "','"
+                //                    + salaryType + "','" + jobTitle + "','" + bonus + "','" + federalTax + "','" + yearlyIncome + "','" + paymentDate + "','" + paymentAmount + "','" + state + "','" + insurance + "');";
+                String state_name = scan.nextLine();
+                String state_tax = scan.nextLine();
+
+                add = "insert into state (name, state_tax) values('"+state_name+"', '"+Integer.parseInt(state_tax)+"');" ;
+                stmt.executeUpdate(add);
+                System.out.println("Line after state add execute");
+
+                String insurance_plan_name = scan.nextLine();
+                String premium_cost = scan.nextLine();
+                add = "insert into insurance_plan (name, premium_cost) values('"+insurance_plan_name+"', '"+Integer.parseInt(premium_cost)+"');" ;
+                stmt.executeUpdate(add);
+                System.out.println("Line after state insurance plan execute");
+
+
                 System.out.println("SSN:");
-                int ssn = scan.nextInt();
+                String ssn = scan.nextLine();
 
                 System.out.println("ID:");
-                int id = scan.nextInt();
+                String id = scan.nextLine();
 
                 System.out.println("Name:");
                 String name = scan.nextLine();
@@ -276,28 +293,16 @@ public class testing {
                 System.out.println("Yearly Income");
                 String yearly_income = scan.nextLine();
 
-                System.out.println("State Name:");
-                String state_name = scan.nextLine();
-
                 System.out.println("Address:");
                 String address = scan.nextLine();
 
-                System.out.println("Insurance Plan Name:");
-                String insurance_plan_name = scan.nextLine();
-                */
-                // String add = "insert into employee (employee_ssn, name, salary_type, job_title, bonus, federal_tax, yearly_income, "
-                //                    + "payment_date, payment_amount, state_name, insurance_plan) values('" + ssn + "', '" + name + "','"
-                //                    + salaryType + "','" + jobTitle + "','" + bonus + "','" + federalTax + "','" + yearlyIncome + "','" + paymentDate + "','" + paymentAmount + "','" + state + "','" + insurance + "');";
-                add = "insert into state (name, state_tax) values('IL', 120);" ;
-                stmt.executeUpdate(add);
-                System.out.println("Line after state add execute");
-
-                add = "insert into insurance_plan (name, premium_cost) values('HPO', 120);" ;
-                stmt.executeUpdate(add);
-                System.out.println("Line after state insurance plan execute");
 
                 add = "insert into employee (employee_ssn, employee_id, name, salary_type, job_title, bonus, yearly_income,state_name, address, " +
-                        "insurance_plan_name) values(12 , 21 , 'Sunny','Salary', 'Intern', 2999, 10000, 'IL', '123 Main', 'HPO');  ";
+                        "insurance_plan_name) values('"+Integer.parseInt(ssn)+"' , '"+Integer.parseInt(id)+"', '"+name+"','"+salary_type+"', '"+job_title+"', '"+Integer.parseInt(bonus)+"', '"+Integer.parseInt(yearly_income)+"', '"+state_name+"', '"+address+"', '"+insurance_plan_name+"');  ";
+
+                /*add = "insert into employee (employee_ssn, employee_id, name, salary_type, job_title, bonus, yearly_income,state_name, address, " +
+                        "insurance_plan_name) values(12 , 21 , 'Sunny','Salary', 'Intern', 2999, 10000, 'IL', '123 Main', 'HPO');  "; */
+
                 System.out.println("Line after employee");
                 stmt.executeUpdate(add);
                 System.out.println("Employee added");
@@ -334,6 +339,7 @@ public class testing {
         System.out.println("");
         System.out.println("1. Pull employee information");
         System.out.println("2. Update Employee information");
+        System.out.println("3. Quit");
 
         Scanner scan = new Scanner(System.in);
         String command = scan.nextLine();
