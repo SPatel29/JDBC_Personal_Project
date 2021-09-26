@@ -233,7 +233,10 @@ public class testing {
         System.out.println("1. Create a database");
         System.out.println("2. Add an employee to the database");
         System.out.println("3. Remove an employee to the database");
+        System.out.println("4. Add Benefits");
+        System.out.println("5. Add Dependent");
         System.out.println("4. Log out!");
+        String add ="";
         Scanner scan = new Scanner(System.in);
         String command = scan.nextLine();
         if (command.equals("1")){
@@ -253,7 +256,6 @@ public class testing {
         }
         else if (command.equals("2")){ //adding an employee
             try {
-                String add;
 
                 // String add = "insert into employee (employee_ssn, name, salary_type, job_title, bonus, federal_tax, yearly_income, "
                 //                    + "payment_date, payment_amount, state_name, insurance_plan) values('" + ssn + "', '" + name + "','"
@@ -319,6 +321,45 @@ public class testing {
                 String remove = "delete from employee where employee_id = '"+Integer.parseInt(id)+"';";
                 stmt.executeUpdate(remove);
                 System.out.println("Employee removed!");
+            }catch (Exception ex){
+                System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
+            }
+        }
+        else if (command.equals("4")){
+            try{
+                System.out.println("Health Plan:");
+                String plan = scan.nextLine();
+                System.out.println("Contribution 401k");
+                String contrib_401k = scan.nextLine();
+                System.out.println("Attorney:");
+                String attorney = scan.nextLine();
+                System.out.println("Life Insurance:");
+                String life_insurance = scan.nextLine();
+                System.out.println("Dental:");
+                String dental = scan.nextLine();
+                System.out.println("Vision:");
+                String vision = scan.nextLine();
+
+                add = "insert into benefits (health_plan, contribution_401k, attorney_plan, life_insurance, dental, vision" +
+                        ") values('"+plan+"' , '"+Integer.parseInt(contrib_401k)+"', '"+attorney+"','"+Integer.parseInt(life_insurance)+"', '"+Integer.parseInt(dental) +"', '"+Integer.parseInt(vision)+"');  ";
+                stmt.executeUpdate(add);
+                System.out.println("Benefits Added!");
+            }catch (Exception ex){
+                System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
+            }
+        }
+        else if (command.equals("5")){
+            try{
+                System.out.println("Enter Dependent SSN:");
+                String ssn = scan.nextLine();
+                System.out.println("Enter relation to Employee");
+                String relation = scan.nextLine();
+                System.out.println("Enter name of dependent");
+                String name = scan.nextLine();
+                add = "insert into dependent (dependent_snn, relation_to_employee, name" +
+                        ") values('"+Integer.parseInt(ssn)+"' , '"+relation+"', '"+name+"');  ";
+                stmt.executeUpdate(add);
+                System.out.println("Added Dependent!");
             }catch (Exception ex){
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
