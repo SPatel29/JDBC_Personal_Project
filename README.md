@@ -2,7 +2,7 @@
 
 ## Purpose:
 
-- My aim was to use JDBC driver from Postgress to create an app that lets users write SQL scripts seemlessly, and provide options such as privilages and login options
+- My aim was to use JDBC driver from Postgress to create an app that lets users write SQL scripts seemlessly, and provide options such as privilages and user login
 
 
 ## Program Features:
