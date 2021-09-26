@@ -3,6 +3,10 @@ import java.sql.*;
 import java.util.*;
 
 
+/*
+
+ */
+
 //ADMIN CREDENTIALS:
 //host: localhost
 //database: postgres
@@ -11,30 +15,24 @@ import java.util.*;
 //password: 98568216 (Same password as the sql terminal)
 //local client: PostgreSQL 13
 
-//Note: there are no credentials for employee.
-//we know if someone is an employee is they do not sign in
-// as an admin. No need for employee credentials, in other words
+//Admin Privilages:
+    //Create a Databse
+    //Add an Employee to database
+    //Remove an Employee from database
+    //Add Benefits
+    //Add Dependent
+    //Log out
 
-//only thing an employee can do is request THEIR information.
-//Nothing else
+//Employee Privilages:
+    //Request THEIR information using their ID
+    //Update their employee information using their ID
+    //Log out
 
-            /*
-            String table = "create table insurance_plan(" +
-                    "           name varchar(30) primary key," +
-                    "           premium_cost bigint" +
-                    "       );";
-            String add;
-            stmt.executeUpdate(table);
-            System.out.println("Database created!");
-            */
+//An Employee and Admin have different menus
+//Each menu has what privilages is authorized to them
 
-            /*
-            String add;
-            add = "insert into insurance_plan (name, premium_cost) values('Sunny ', '10 ');  "   ;
-            System.out.println("After add");
-            stmt.executeUpdate(add);
-            System.out.println("After execute add");
-            */
+//a stmt is an SQL statement. This helps us add things to our database, or make an entinerely new one
+// a conn is a JDBC connection. This helps us connect to an existing database
 
 public class testing {
     public static void main (String[] args) throws SQLException {
@@ -47,6 +45,7 @@ public class testing {
         Statement stmt = conn.createStatement();
 
         do{
+            //main menu in do while because what if User wants to log out immediately
             System.out.println("What would you like to do?");
             System.out.println("1. Log in as admin");
             System.out.println("2. Log in as employee");
@@ -227,6 +226,9 @@ public class testing {
             System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
         }
     }
+    //End of Database Function Creations
+
+    //Start of User functionality
     private static boolean admin_menu(Statement stmt, Connection conn){
         System.out.println("Admin Privilages include:");
         System.out.println("---------------------------------------");
@@ -235,7 +237,7 @@ public class testing {
         System.out.println("3. Remove an employee to the database");
         System.out.println("4. Add Benefits");
         System.out.println("5. Add Dependent");
-        System.out.println("4. Log out!");
+        System.out.println("6. Log out!");
         String add ="";
         Scanner scan = new Scanner(System.in);
         String command = scan.nextLine();
@@ -257,9 +259,6 @@ public class testing {
         else if (command.equals("2")){ //adding an employee
             try {
 
-                // String add = "insert into employee (employee_ssn, name, salary_type, job_title, bonus, federal_tax, yearly_income, "
-                //                    + "payment_date, payment_amount, state_name, insurance_plan) values('" + ssn + "', '" + name + "','"
-                //                    + salaryType + "','" + jobTitle + "','" + bonus + "','" + federalTax + "','" + yearlyIncome + "','" + paymentDate + "','" + paymentAmount + "','" + state + "','" + insurance + "');";
                 System.out.println("State:");
                 String state_name = scan.nextLine();
                 System.out.println("State Tax :");
@@ -302,11 +301,9 @@ public class testing {
                 System.out.println("Address:");
                 String address = scan.nextLine();
 
-
                 add = "insert into employee (employee_ssn, employee_id, name, salary_type, job_title, bonus, yearly_income,state_name, address, " +
                         "insurance_plan_name) values('"+Integer.parseInt(ssn)+"' , '"+Integer.parseInt(id)+"', '"+name+"','"+salary_type+"', '"+job_title+"', '"+Integer.parseInt(bonus)+"', '"+Integer.parseInt(yearly_income)+"', '"+state_name+"', '"+address+"', '"+insurance_plan_name+"');  ";
 
-                System.out.println("Line after employee");
                 stmt.executeUpdate(add);
                 System.out.println("Employee added");
             }catch (Exception ex){
@@ -350,16 +347,33 @@ public class testing {
         }
         else if (command.equals("5")){
             try{
+
                 System.out.println("Enter Dependent SSN:");
                 String ssn = scan.nextLine();
                 System.out.println("Enter relation to Employee");
                 String relation = scan.nextLine();
                 System.out.println("Enter name of dependent");
                 String name = scan.nextLine();
+                System.out.println("Enter Health Plan");
+                String plan = scan.nextLine();
+                System.out.println("Enter Employee SSN");
+                String employee_ssn = scan.nextLine();
+
                 add = "insert into dependent (dependent_snn, relation_to_employee, name" +
                         ") values('"+Integer.parseInt(ssn)+"' , '"+relation+"', '"+name+"');  ";
                 stmt.executeUpdate(add);
                 System.out.println("Added Dependent!");
+
+                add = "insert into dependent_benefits (dependent_ssn, health_plan" +
+                        ") values('"+Integer.parseInt(ssn)+"' , '"+plan+"');  ";
+                stmt.executeUpdate(add);
+                System.out.println("Added Dependent Benefits!");
+
+                add = "insert into employee_dependent (dependent_ssn, employee_ssn" +
+                        ") values('"+Integer.parseInt(ssn)+"' , '"+Integer.parseInt(employee_ssn)+"');  ";
+                stmt.executeUpdate(add);
+                System.out.println("Added Dependent Info from Employee!");
+
             }catch (Exception ex){
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
