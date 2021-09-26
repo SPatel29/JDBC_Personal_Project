@@ -4,6 +4,17 @@ import java.util.*;
 
 
 /*
+    What this project does:
+        - Connect to an SQL Database using JDBC
+        - JDBC allows us to
+            * Create SQL Statements in Java
+                - such as create, insert, delete, specifiy primary key, foregin key and more.
+            * Add additional featuers such as, authorization and ease of executing sql statements via console
+                - authorization/privilages are specified above
+            * Create Databases
+        - Add Privileges to Employee and Admin
+        - Uses console to grant users a text-based User Interphase. Helpful for ease of adding sql statements
+        - Uses Scanner class to look for user inputs, which provides a more efficient way of inputting data
 
  */
 
@@ -33,6 +44,8 @@ import java.util.*;
 
 //a stmt is an SQL statement. This helps us add things to our database, or make an entinerely new one
 // a conn is a JDBC connection. This helps us connect to an existing database
+
+
 
 public class testing {
     public static void main (String[] args) throws SQLException {
@@ -78,9 +91,11 @@ public class testing {
                 System.out.println("Please enter a valid command");
             }
 
-        }while (logged_in);
+        }while (logged_in); //will keep displaying a message if someone, whether it be a user or admin is logged in.
 
     }
+
+    //start of datbase creation
 
     public static void create_insurance_plan(Statement stmt) {
         try {
@@ -241,27 +256,29 @@ public class testing {
         String add ="";
         Scanner scan = new Scanner(System.in);
         String command = scan.nextLine();
-        if (command.equals("1")){
+        if (command.equals("1")){ //command 1 is databse creation
             try{
-                create_insurance_plan(stmt); //creates the insurance plan table
+                //creates all necessary databases. Needed before modifying a database.
+                create_insurance_plan(stmt);
                 create_state(stmt);
                 create_dependent(stmt);
-                create_employee(stmt); //creates the employee table
+                create_employee(stmt);
                 create_benefits(stmt);
                 create_employee_benefits(stmt);
                 create_employee_dependent(stmt);
                 create_dependent_benefits(stmt);
-                System.out.println("--------------");
+                System.out.println("-------------------"); //for clairity
             }catch (Exception ex){
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
         }
-        else if (command.equals("2")){ //adding an employee
+        else if (command.equals("2")){ //Command 2 is adding an employee to the employee database
             try {
 
+                //Integer parseInt parses the string to int since our database column is of int type
                 System.out.println("State:");
                 String state_name = scan.nextLine();
-                System.out.println("State Tax :");
+                System.out.println("State Tax: ");
                 String state_tax = scan.nextLine();
                 add = "insert into state (name, state_tax) values('"+state_name+"', '"+Integer.parseInt(state_tax)+"');" ;
                 stmt.executeUpdate(add);
@@ -274,8 +291,7 @@ public class testing {
                 String premium_cost = scan.nextLine();
                 add = "insert into insurance_plan (name, premium_cost) values('"+insurance_plan_name+"', '"+Integer.parseInt(premium_cost)+"');" ;
                 stmt.executeUpdate(add);
-                System.out.println("Line after state insurance plan execute");
-
+                System.out.println("Insurance Plan Added!");
 
                 System.out.println("SSN:");
                 String ssn = scan.nextLine();
@@ -311,7 +327,7 @@ public class testing {
             }
 
         }
-        else if (command.equals("3")){
+        else if (command.equals("3")){ //Command 3 is deleting an employee from database
             try{
                 System.out.println("ID:");
                 String id = scan.nextLine();
@@ -322,7 +338,7 @@ public class testing {
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
         }
-        else if (command.equals("4")){
+        else if (command.equals("4")){ //Command 4 is adding a health plan
             try{
                 System.out.println("Health Plan:");
                 String plan = scan.nextLine();
@@ -345,7 +361,7 @@ public class testing {
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
         }
-        else if (command.equals("5")){
+        else if (command.equals("5")){ //Command 5 is adding all dependent information
             try{
 
                 System.out.println("Enter Dependent SSN:");
@@ -378,10 +394,10 @@ public class testing {
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
         }
-        else{
+        else{ //out quit option
             try{
-                stmt.close();
-                conn.close();
+                stmt.close(); //closing our sql statements for safety
+                conn.close(); //closing database connections for safety
             }catch (Exception ex){
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
@@ -391,16 +407,15 @@ public class testing {
         return true;
     }
 
-    private static boolean employee_menu(Statement stmt){
+    private static boolean employee_menu(Statement stmt){ //employee menu is for employee. Describes their privilages
         System.out.println("Employee Privilages inlude:");
-        System.out.println("");
         System.out.println("1. Pull employee information");
         System.out.println("2. Update Employee information");
         System.out.println("3. Quit");
 
         Scanner scan = new Scanner(System.in);
         String command = scan.nextLine();
-        if (command.equals("1")){
+        if (command.equals("1")){ //command 1 is pulling an employee's own information
             try{
                 System.out.println("ID:");
                 String id = scan.nextLine();
@@ -410,7 +425,7 @@ public class testing {
                 System.out.println("Error -- "+ex.getMessage() + "\n Please enter a new command");
             }
         }
-        else if (command.equals("2")){
+        else if (command.equals("2")){ //command 2 is  upating an employee informtion
             try{
                 System.out.println("ID:");
                 String id = scan.nextLine();
@@ -420,7 +435,7 @@ public class testing {
                 System.out.println("2. State Name");
                 System.out.println("3. Address");
                 String option = scan.nextLine();
-                String change = "";
+                String change = ""; //made them local variables to method since we use them multiple times
                 String update = "";
                 if (option.equals("1")){
                     System.out.println("New Name:");
@@ -446,9 +461,9 @@ public class testing {
             }catch (Exception ex){
             }
         }
-        else{
+        else{ //else statement is when employee wants to sign out or quit
             return false;
         }
-        return true;
+        return true; //returns true if employee decides to do anything other than quit
     }
 }
