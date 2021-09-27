@@ -7,7 +7,7 @@
 
 ## Program Features:
 
-  * Make a database inside Java code
+  * Make a database using Java code
   * Create SQL statements such as Create, insert, remove, and more, using Java
   * Take in User Input
   * Provide a menu option
